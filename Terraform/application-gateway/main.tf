@@ -1,21 +1,30 @@
-# Configure the provider
+# Configure the Microsoft Azure Provider
 provider "azurerm" {
-    version = "=1.20.0"
+    version = "=1.33"
+}
+
+# Local Variables to be re-used
+locals {
+
+  # Resource 
+   resource_tags  = {
+    environment = "test"
+  }  
 }
 
 # Create a new Resource Group
 resource "azurerm_resource_group" "test" {
   name     = "${var.prefix}-rg"
   location = "${var.location}"
-  tags = "${var.resource_tags}"
+  tags = "${local.resource_tags}"
 }
 
-# Create a new Virtual Network
+# Create a new Virtual Network and Subnets - Networking
 resource "azurerm_virtual_network" "test" {
   name                = "${var.prefix}-vnet"
   resource_group_name = "${azurerm_resource_group.test.name}"
   location            = "${azurerm_resource_group.test.location}"
-  tags = "${var.resource_tags}"
+  tags = "${local.resource_tags}"
   address_space       = ["10.254.0.0/16"]
 }
 
@@ -33,15 +42,17 @@ resource "azurerm_subnet" "backend" {
   address_prefix       = "10.254.2.0/24"
 }
 
+# Create a Public IP address
+
 resource "azurerm_public_ip" "test" {
   name                = "${var.prefix}-appgw-pip"
   resource_group_name = "${azurerm_resource_group.test.name}"
   location            = "${azurerm_resource_group.test.location}"
-  tags = "${var.resource_tags}"
+  tags = "${local.resource_tags}"
   allocation_method   = "Dynamic"
 }
 
-# since these variables are re-used - a locals block makes this more maintainable
+# Local Variables to be re-used
 locals {
   backend_address_pool_name      = "${azurerm_virtual_network.test.name}-beap"
   frontend_port_name             = "${azurerm_virtual_network.test.name}-feport"
@@ -52,11 +63,12 @@ locals {
   redirect_configuration_name    = "${azurerm_virtual_network.test.name}-rdrcfg"
 }
 
+# Create Application Gateway
 resource "azurerm_application_gateway" "network" {
   name                = "${var.prefix}-appgateway"
   resource_group_name = "${azurerm_resource_group.test.name}"
   location            = "${azurerm_resource_group.test.location}"
-  tags = "${var.resource_tags}"
+  tags = "${local.resource_tags}"
 
   sku {
     name     = "Standard_Small"

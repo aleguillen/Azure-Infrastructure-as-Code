@@ -1,0 +1,11 @@
+# Local bash scripts to Azure Configuration. 
+**/*.local.sh
+
+# Local Terraform Variables files
+**/*.tfvars
+
+# Terraform State files
+**/*.tfstate
+
+# Local Terraform Plugins folder
+**/.terraform/**

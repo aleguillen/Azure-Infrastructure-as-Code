@@ -1,5 +1,2 @@
-prefix  = "<Your Prefix>"
+prefix  = "ale123"
 location    = "East US"
-resource_tags = {
-    "environment" = "test"
-} 
