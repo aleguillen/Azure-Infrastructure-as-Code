@@ -1,6 +1,5 @@
 #!/bin/sh
-# Terraform command options.
-
+###### Terraform command options ######
 while true; do
 echo "Terraform command options: "
 echo "1.  Terraform init"
@@ -15,7 +14,7 @@ echo
 
 echo -n "Enter your choice, or 0 for exit: "
 read choice
-echo
+echo 
 
 case $choice in
      1)

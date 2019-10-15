@@ -1,4 +1,4 @@
-# Get exisiting Key Vault
+# Get existing Key Vault
 data "azurerm_key_vault" "vault" {
   name                = var.kv_name
   resource_group_name = var.rg_name

@@ -1,14 +1,5 @@
 data "azurerm_subscription" "current" {}
 
-# Locals dependant of Data Sources
-# locals {
-#     rg_name   = "${var.prefix}-rg"
-
-#     unique_string = "${substr(md5(join("", [data.azurerm_subscription.current.id, "/resourceGroups/", local.rg_name])), 0, 5)}"
-
-#     kv_name = "${var.prefix}-${local.unique_string}-kv"
-# }
-
 resource "azurerm_resource_group" "vault" {
     name     = local.rg_name
     location = var.location
@@ -36,33 +27,48 @@ resource "azurerm_key_vault" "vault" {
     }
 }
 
-# Adding Access Policy per Object ID
-resource "azurerm_key_vault_access_policy" "accesspolicies_object_id" {
-    count = length(var.ap_object_ids)
+module "KeyVaultAccessPolicies" {
+    source = "../key-vault-access-policies"
+  
+    rg_name = azurerm_resource_group.vault.name
+    kv_name = azurerm_key_vault.vault.name
 
-    key_vault_id    = azurerm_key_vault.vault.id
-    tenant_id       = data.azurerm_subscription.current.tenant_id
-
-    object_id = var.ap_object_ids[count.index]
-    
-    key_permissions = var.ap_key_permissions
-    certificate_permissions = var.ap_certificate_permissions
-    secret_permissions = var.ap_secret_permissions
-    storage_permissions = var.ap_storage_permissions
+    ap_object_ids = var.ap_object_ids
+    ap_object_ids_application_ids_map = var.ap_object_ids_application_ids_map
+    ap_certificate_permissions = var.ap_certificate_permissions
+    ap_key_permissions = var.ap_key_permissions
+    ap_secret_permissions = var.ap_secret_permissions
+    ap_storage_permissions = var.ap_storage_permissions
 }
 
-# Adding Access Policy per Object ID and Application ID map - COMPOUND IDENTITY
-resource "azurerm_key_vault_access_policy" "accesspolicies_compound_id" {
-    count = length(keys(var.ap_object_ids_application_ids_map))
 
-    key_vault_id    = azurerm_key_vault.vault.id
-    tenant_id       = data.azurerm_subscription.current.tenant_id
+# # Adding Access Policy per Object ID
+# resource "azurerm_key_vault_access_policy" "accesspolicies_object_id" {
+#     count = length(var.ap_object_ids)
 
-    object_id = keys(var.ap_object_ids_application_ids_map)[count.index]
-    application_id = var.ap_object_ids_application_ids_map[keys(var.ap_object_ids_application_ids_map)[count.index]] == "" ? null : var.ap_object_ids_application_ids_map[keys(var.ap_object_ids_application_ids_map)[count.index]]
+#     key_vault_id    = azurerm_key_vault.vault.id
+#     tenant_id       = data.azurerm_subscription.current.tenant_id
+
+#     object_id = var.ap_object_ids[count.index]
     
-    key_permissions = var.ap_key_permissions
-    certificate_permissions = var.ap_certificate_permissions
-    secret_permissions = var.ap_secret_permissions
-    storage_permissions = var.ap_storage_permissions
-}
+#     key_permissions = var.ap_key_permissions
+#     certificate_permissions = var.ap_certificate_permissions
+#     secret_permissions = var.ap_secret_permissions
+#     storage_permissions = var.ap_storage_permissions
+# }
+
+# # Adding Access Policy per Object ID and Application ID map - COMPOUND IDENTITY
+# resource "azurerm_key_vault_access_policy" "accesspolicies_compound_id" {
+#     count = length(keys(var.ap_object_ids_application_ids_map))
+
+#     key_vault_id    = azurerm_key_vault.vault.id
+#     tenant_id       = data.azurerm_subscription.current.tenant_id
+
+#     object_id = keys(var.ap_object_ids_application_ids_map)[count.index]
+#     application_id = var.ap_object_ids_application_ids_map[keys(var.ap_object_ids_application_ids_map)[count.index]] == "" ? null : var.ap_object_ids_application_ids_map[keys(var.ap_object_ids_application_ids_map)[count.index]]
+    
+#     key_permissions = var.ap_key_permissions
+#     certificate_permissions = var.ap_certificate_permissions
+#     secret_permissions = var.ap_secret_permissions
+#     storage_permissions = var.ap_storage_permissions
+# }
