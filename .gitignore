@@ -6,9 +6,11 @@
 
 # Terraform State files
 **/*.tfstate
+**/*.tfstate.backup
 
 # Local Terraform Plugins/Module folder
 **/.terraform/**
 
 # Ignore Folder staring with __
 Terraform/__*/**
+
