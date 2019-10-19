@@ -16,15 +16,13 @@
 ### Deploy an Azure Resource Manager Template in Azure
 
 #### From Azure Portal
-> https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-quickstart-create-templates-use-the-portal#edit-and-deploy-the-template 
-
 > https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-template-deploy-portal
 
+> https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-quickstart-create-templates-use-the-portal#edit-and-deploy-the-template 
 
 #### From Azure CLI
-https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-template-deploy-cli
+> https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-template-deploy-cli
 
-
-### Azure DevOps CI/CD pipelines
-https://docs.microsoft.com/en-us/azure/azure-resource-manager/vs-resource-groups-project-devops-pipelines
+### From Azure DevOps CI/CD pipelines
+> https://docs.microsoft.com/en-us/azure/azure-resource-manager/vs-resource-groups-project-devops-pipelines
 
