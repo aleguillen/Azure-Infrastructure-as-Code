@@ -1,0 +1,18 @@
+[
+   {
+       "parameters": {
+           "allowedLocations": {
+               "value": "[parameters('allowedLocations')]"
+           }
+       },
+       "policyDefinitionId": "/subscriptions/<current-subscription-id-replaced-at-runtime>/providers/Microsoft.Authorization/policyDefinitions/policy2-enforced-locations"
+   },
+   {
+       "parameters": {
+           "tagName": {
+               "value": "[parameters('tagName')]"
+           }
+       },
+       "policyDefinitionId": "/subscriptions/<current-subscription-id-replaced-at-runtime>/providers/Microsoft.Authorization/policyDefinitions/policy1-enforce-resource-groups-tag"
+   }
+]

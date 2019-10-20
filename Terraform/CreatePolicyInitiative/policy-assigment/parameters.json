@@ -1,0 +1,8 @@
+{
+    "tagName": {
+        "value": "environment"
+    },
+    "allowedLocations": {
+        "value": [ "eastus", "southcentralus", "westus2" ]
+    }
+}

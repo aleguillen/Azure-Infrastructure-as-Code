@@ -1,0 +1,18 @@
+{
+    "tagName": {
+        "type": "String",
+        "metadata": {
+            "description": "Name of the tag, such as costCenter"
+        },
+        "defaultValue": "environment"
+    },
+    "allowedLocations": {
+        "type": "array",
+        "metadata": {
+            "description": "The list of locations that can be specified when deploying resources",
+            "strongType": "location",
+            "displayName": "Allowed locations"
+        },
+        "defaultValue": [ "eastus", "southcentralus", "westus2" ]
+    }
+}
