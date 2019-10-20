@@ -5,7 +5,7 @@ data "external" "az_account" {
 
 # Creates Resource Group and Key Vault 
 module "KeyVault" {
-    source = "../Modules/key-vault"
+    source = "../Modules/key-vault/vault"
 
     prefix = var.prefix
     tags = var.tags
@@ -18,7 +18,7 @@ module "KeyVault" {
 
 # Imports a Certificate to Key Vault
 module "KeyVaultCert" {
-    source = "../Modules/key-vault-certificate"
+    source = "../Modules/key-vault/certificate"
 
     tags = var.tags
     
@@ -34,7 +34,7 @@ module "KeyVaultCert" {
 
 # Generates Certificate in Key vault 
 module "KeyVaultGenCert" {
-    source = "../Modules/key-vault-certificate"
+    source = "../Modules/key-vault/certificate"
 
     tags = var.tags
     
