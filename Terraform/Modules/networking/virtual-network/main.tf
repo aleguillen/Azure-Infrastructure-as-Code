@@ -29,6 +29,6 @@ resource "azurerm_subnet" "network" {
     var.vnet_subnets_newbits,
     var.vnet_subnets_netnum + count.index,
   )
-
+  
   service_endpoints = length(var.vnet_subnet_service_endpoints) > 0 ? var.vnet_subnet_service_endpoints : null
 }

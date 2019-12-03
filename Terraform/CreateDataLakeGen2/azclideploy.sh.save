@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# A simple Azure Storage example script
+
+export RESOURCE_GROUP_NAME=myResourceGroupDL
+export LOCATION=eastus
+export STORAGE_ACCOUNT_NAME=algutstorageaccountdl
+
+az group create \ 
+    --name $RESOURCE_GROUP_NAME \ 
+    --location $LOCATION
+
+az storage account create \
+    --name $STORAGE_ACCOUNT_NAME \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --location $LOCATION \
+    --sku Standard_LRS \
+    --kind StorageV2 \
+    --hierarchical-namespace true
+
+export AZURE_STORAGE_KEY=$(az storage account keys list --account-name $STORAGE_ACCOUNT_NAME --resource-group $RESOURCE_GROUP_NAME --output tsv --query [0].value)
+
+# export container_name=containertest
+# export blob_name=filename.txt
+# export file_to_upload="C:\Users\algut\Documents\Customers\AT&T\filename.txt"
+
+# echo "Creating the container..."
+# az storage container create --name $container_name
+
+# echo "Uploading the file..."
+# az storage blob upload --container-name $container_name --file $file_to_upload --name $blob_name
+
+# echo "Listing the blobs..."
+# az storage blob list --container-name $container_name --output table
+
+echo "Done"

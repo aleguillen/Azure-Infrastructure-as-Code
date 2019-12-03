@@ -1,6 +1,6 @@
 # Creates Resource Group and Virtual Network with specified subnets
 module "VirtualNetwork" {
-  source = "../Modules/virtual-network"
+  source = "../Modules/networking/virtual-network"
   
   prefix = var.prefix
   tags = var.tags
